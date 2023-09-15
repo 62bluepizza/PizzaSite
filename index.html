@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+
+        #menu-container {
+            position: relative;
+            width: 200px; /* Original menu container width */
+        }
+
+        #menu {
+            background-color: blue;
+            width: 100%; /* Original menu width */
+            height: 100vh; /* Set menu height to match viewport height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-top {
+            background: linear-gradient(to top, rgba(0, 0, 255, 0.7) 0%, rgba(0, 0, 255, 0) 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px; /* Height of the top menu box */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-top h1 {
+            color: white;
+        }
+
+        .menu-section {
+            border: 2px solid white;
+            margin: 1.5cm auto 0.5cm auto; /* Reduce the margin to make the sections closer to each other */
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            width: 80%; /* Make the boxes wider */
+            cursor: pointer; /* Add cursor pointer for interaction */
+        }
+
+        #content {
+            flex-grow: 1;
+            text-align: center;
+            background-image: url('https://images.unsplash.com/photo-1553375388-5917bf50a7ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c3rhcnJ5fGVufDB8fDB8fHww&w=1000&q=80');
+            background-size: cover; /* Ensure the image covers the content area */
+            background-position: center; /* Center the image */
+            height: 100vh; /* Set the content area height to match the viewport height */
+            position: relative; /* Make the content area a relative container */
+            width: calc(100% - 1.5in); /* Reduce the width by 1.5 inches */
+        }
+
+        .grey-box {
+            background: linear-gradient(to bottom, rgba(169, 169, 169, 0) 0%, rgba(169, 169, 169, 0) 50%, rgba(169, 169, 169, 0.7) 100%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.2em; /* Slightly smaller font size */
+        }
+
+        .grey-box h1 {
+            color: white;
+        }
+
+        /* Additional styles for the "cool-box" */
+        .cool-box {
+            background: linear-gradient(to bottom, #FFC0CB, #FF69B4); /* Light pink gradient */
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .cool-box p {
+            color: white;
+            font-size: 1em; /* Smaller font size */
+        }
+
+        /* Style for the white squares */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            gap: 20px; /* Gap between squares */
+            padding: 20px;
+        }
+
+        .game-square {
+            width: 150px; /* Adjusted width for a perfect size */
+            height: 150px; /* Adjusted height for a perfect size */
+            background-color: white;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9em; /* Slightly smaller font size */
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px; /* Rounded corners */
+            text-decoration: none; /* Remove underline */
+            color: black; /* Set text color to black */
+        }
+
+        /* Style for the game iframe container */
+        .game-iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Ensure it's on top of other elements */
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+        }
+
+        .game-iframe-container.active {
+            display: flex;
+        }
+
+        .game-iframe {
+            width: 80%; /* 80% of container width */
+            height: 80vh; /* 80% of viewport height */
+            border: none;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu-container">
+        <div id="menu">
+            <div class="menu-top">
+                <h1>Menu</h1>
+            </div>
+            <div class="menu-section" id="home-section" onclick="showSection('pizza-box')">
+                Home
+            </div>
+            <div class="menu-section" id="links-section" onclick="showSection('links-box')">
+                Links
+            </div>
+            <div class="menu-section" id="games-section" onclick="showSection('games-box')">
+                Games
+            </div>
+            <div class="menu-section" id="credits-section" onclick="showSection('credits-box')">
+                Credits
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="grey-box" id="pizza-box">
+            <h1>Pizza Place</h1>
+        </div>
+        <div class="grey-box" id="links-box" style="display: none;">
+            <!-- Content for the "Links" section -->
+            <h1>Links Section</h1>
+        </div>
+        <div class="grey-box" id="games-box" style="display: none;">
+            <!-- Content for the "Games" section (grid of white squares) -->
+            <h1>Games</h1>
+            <div class="games-grid">
+                <!-- White squares without iframes -->
+                <a class="game-square" href="about:blank" target="_blank" onclick="openGame('https://mathgames66.github.io/')">Math</a>
+                <a class="game-square" href="about:blank" target="_blank" onclick="openGame('https://whitespider.gq')">WhiteSpider</a>
+                <a class="game-square" href="about:blank" target="_blank" onclick="openGame('https://nate-games.github.io/0/g')">NateGames</a>
+                <a class="game-square" href="about:blank" target="_blank" onclick="openGame('https://www.kongregate.com/games')">KongG</a>
+                <a class="game-square" href="about:blank" target="_blank" onclick="openGame('https://strongdog.com')">Lab</a>
+                <a class="game-square" href="about:blank" target="_blank" onclick="openGame('https://bee-swarm-simulator.62bluepizzas.repl.co')">Bee Swarm</a>
+                <a class="game-square" href="about:blank" target="_blank" onclick="openGame('https://blog.symbaloo.com/webmixes/4/unblocked-games#cat_15')">WebMixes</a>
+            </div>
+        </div>
+        <div class="grey-box" id="credits-box" style="display: none;">
+            <!-- Content for the "Credits" section -->
+            <h1>Credits Section</h1>
+            <div class="cool-box">
+                <p>Made with &lt;3 by Ben L (Also Known As 62bluepizzas)</p>
+                <p>Please Join Discord: <a href="https://discord.gg/tQyv2czkYc" target="_blank">https://discord.gg/tQyv2czkYc</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code to open games in a new window with iframes
+
+        function openGame(url) {
+            // Create a new HTML document with the iframe
+            const iframeHtml = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Classroom</title>
+                    <link rel="icon" href="favicon.ico" type="image/x-icon">
+                </head>
+                <body>
+                    <iframe src="${url}" frameborder="0" style="width: 100%; height: 100vh;"></iframe>
+                </body>
+                </html>
+            `;
+
+            // Open a new window with the iframe content
+            const newWindow = window.open('about:blank', '_blank');
+            newWindow.document.write(iframeHtml);
+        }
+
+        // JavaScript code to toggle between sections
+
+        function showSection(sectionId) {
+            const sections = ["pizza-box", "links-box", "games-box", "credits-box"];
+
+            sections.forEach(function (section) {
+                const element = document.getElementById(section);
+                if (element) {
+                    if (section === sectionId) {
+                        element.style.display = "block";
+                    } else {
+                        element.style.display = "none";
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
